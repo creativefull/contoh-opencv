@@ -1,0 +1,39 @@
+html
+	head
+		title LATIHAN OPENCV
+		script(src="/js/jquery.min.js")
+		script(src="/js/socket.io.js")
+		link(rel="stylesheet" href="/css/main.css")
+	body
+		canvas#img.webcame
+		//- video#img.webcame(autoplay preload loop mute) Put Here
+		//- canvas.webcame#canvas(style="display:inline")
+		script.
+			var socket;
+
+			socket = io.connect('http://localhost:3000');
+			socket.on('connect', function() {
+				socket.emit('playCamera', {user : "muzaki"});
+			})
+
+			socket.on('image', function(hasil) {
+				var uint8Arr = new Uint8Array(hasil);
+				var str = String.fromCharCode.apply(null, uint8Arr);
+				var bs64 = "data:image/png;base64," + btoa(str);
+				$("#img").css({"background-image" : "url(" + bs64 + ")"});
+			})
+			//- window.onload=function() {
+			//- 	navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mediaDevices.getUserMedia || navigator.msGetUserMedia);
+
+			//- 	var video = document.getElementById('img');
+			//- 	var canvas = $("#canvas");
+			//- 	var ctx = canvas.get()[0].getContext('2d');
+
+			//- 	navigator.getUserMedia({video : true}, function(stream) {
+			//- 		video.src=URL.createObjectURL(stream);
+			//- 	}, function(err) { console.log(err) })
+			//- 	timer = setInterval(
+			//- 		function () {
+			//- 			ctx.drawImage(video, 0, 0, 320, 240);
+			//- 	}, 250);
+			//- }
