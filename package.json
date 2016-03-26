@@ -1,0 +1,8 @@
+{
+  "name": "Latihan OpenCV",
+  "description": "IKI Latihan OpenCv",
+  "version": "0.1",
+  "dependencies": {
+    "opencv": "^5.0.0"
+  }
+}
